@@ -61,7 +61,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-atelier-surfaceContainer border border-atelier-border text-xs font-mono">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-atelier-neonGreen opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-atelier-neonGreen"></span>
+              <span
+                className={`relative inline-flex rounded-full h-2 w-2 ${queueOpen ? "bg-atelier-neonGreen" : "bg-atelier-red"}`}
+              ></span>
             </span>
             <span className="text-white text-[11px]">
               {queueOpen
