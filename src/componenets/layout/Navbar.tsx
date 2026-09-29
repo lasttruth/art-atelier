@@ -1,115 +1,122 @@
 "use client";
 
-import Image from "next/image";
+import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-interface NavItem {
-  label: string;
-  href: string;
+interface NavbarProps {
+  queueOpen?: boolean;
+  slotsRemaining?: number;
+  totalSlots?: number;
 }
 
-const navItems: NavItem[] = [
-  { label: "Bio Hub", href: "/bio" },
-  { label: "About", href: "/about" },
-  { label: "Services & Prices", href: "/services" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "SnackAttacks", href: "/snackattacks" },
-  { label: "Tipping / Support", href: "/support" },
-];
+export const Navbar: React.FC<NavbarProps> = ({
+  queueOpen = true,
+  slotsRemaining = 3,
+  totalSlots = 5,
+}) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-export function Navbar() {
-  const pathname = usePathname();
+  const navLinks = [
+    { label: "About", href: "#about" },
+    { label: "Services & Prices", href: "#services" },
+    { label: "Gallery", href: "#gallery" },
+    { label: "SnackAttacks", href: "#membership" },
+    { label: "Tipping / Support", href: "#tips" },
+    { label: "Pact Codex", href: "#terms" },
+  ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#231a38] bg-[#0c0814]/95 backdrop-blur-md">
-      {/* Right: Queue Status Badge & Spider Avatar */}
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2.5 rounded-full border border-lime-500/40 bg-black/60 px-4 py-1.5 shadow-[0_0_10px_rgba(132,204,22,0.15)]">
-            <span className="text-xs font-bold tracking-wider text-lime-400 uppercase font-sans">
-              Queue: Open
-            </span>
-
-            {/* Inline SVG Target / Status Icon */}
-            <svg
-              className="h-4 w-4 text-lime-400"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-            >
-              <circle cx="12" cy="12" r="9" />
-              <circle cx="12" cy="12" r="3" fill="currentColor" />
-            </svg>
-          </div>
-
-          {/* Spider Avatar Graphic */}
-          <div className="relative h-10 w-10 shrink-0 cursor-pointer transition-transform hover:scale-110">
-            <Image
-              src="/spider-rose.png"
-              alt="Widowrose Avatar"
-              fill
-              style={{ objectFit: "contain" }}
-            />
-          </div>
-        </div>
-
-        {/* Center: Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-2">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`px-4 py-1.5 text-base font-serif tracking-wide transition-all rounded-md ${
-                  isActive
-                    ? "bg-[#35184f] text-[#c084fc] font-medium shadow-[0_0_12px_rgba(147,51,234,0.25)]"
-                    : "text-[#cbb8dc] hover:text-white hover:bg-white/5"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Right: Queue Status Badge & Spider Avatar */}
-        {/* Right: Brand Identity */}
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-atelier-surface/90 border-b border-atelier-border transition-all">
+      <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
+        {/* Brand */}
         <Link href="/" className="flex items-center gap-3 group">
-          {/* Pure SVG Tech Hexagon Logo */}
-          <div className="text-lime-400 transition-transform group-hover:scale-105">
-            <svg
-              className="h-8 w-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {/* Outer Hexagon */}
-              <polygon points="12 2 21 7.2 21 16.8 12 22 3 16.8 3 7.2 12 2" />
-              {/* Inner Cube / Node */}
-              <circle cx="12" cy="12" r="2.5" />
-              <line x1="12" y1="2" x2="12" y2="9.5" />
-              <line x1="3" y1="16.8" x2="9.8" y2="13.2" />
-              <line x1="21" y1="16.8" x2="14.2" y2="13.2" />
-            </svg>
+          <div className="w-8 h-8 rounded-lg bg-atelier-purple/30 border border-atelier-purple/60 flex items-center justify-center text-atelier-neonGreen font-bold transition-transform group-hover:scale-105">
+            ✦
           </div>
-
-          <div className="flex flex-col">
-            <span className="font-serif text-lg font-bold tracking-widest text-[#d6b4e8] transition-colors group-hover:text-purple-200">
-              WIDOWROSE ATELIER
+          <div>
+            <span className="font-space font-bold tracking-wider text-sm uppercase text-white block group-hover:text-atelier-neonGreen transition-colors">
+              WidowRose Atelier
             </span>
-            <span className="text-[10px] tracking-[0.22em] text-[#9b8eb2] uppercase font-sans">
+            <span className="text-[10px] uppercase font-mono tracking-widest text-atelier-neonGreen">
               Gothic Occult Hub
             </span>
           </div>
         </Link>
+
+        {/* Desktop Links */}
+        <nav className="hidden lg:flex items-center gap-6 text-xs uppercase tracking-wider text-atelier-textMuted font-medium">
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="hover:text-atelier-neonGreen transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Live Queue Status Pill */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-atelier-surfaceContainer border border-atelier-border text-xs font-mono">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-atelier-neonGreen opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-atelier-neonGreen"></span>
+            </span>
+            <span className="text-white text-[11px]">
+              {queueOpen
+                ? `QUEUE: ${slotsRemaining}/${totalSlots} SLOTS`
+                : "QUEUE: CLOSED"}
+            </span>
+          </div>
+
+          {/* Mobile menu toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 rounded-lg bg-atelier-surfaceContainer border border-atelier-border text-slate-300 hover:text-white"
+            aria-label="Toggle navigation"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              {mobileMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden border-b border-atelier-border bg-atelier-surfaceContainer/95 px-6 py-4 space-y-3">
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-xs uppercase tracking-wider text-slate-200 hover:text-atelier-neonGreen"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </header>
   );
-}
+};

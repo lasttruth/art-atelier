@@ -1,1 +1,54 @@
 @import "tailwindcss";
+
+@theme inline {
+  --color-atelier-surface: #14121b;
+  --color-atelier-surfaceDim: #0f0d16;
+  --color-atelier-surfaceContainer: #1c1a24;
+  --color-atelier-surfaceHigh: #262330;
+  --color-atelier-border: rgba(255, 255, 255, 0.08);
+  --color-atelier-borderGlow: rgba(98, 44, 142, 0.35);
+  --color-atelier-purple: #622c8e;
+  --color-atelier-red: #940548;
+  --color-atelier-neonGreen: #b7f75b;
+  --color-atelier-cyan: #00b0d8;
+  --color-atelier-textMuted: #9e97af;
+  --font-sans: var(--font-plus-jakarta-sans), sans-serif;
+  --font-space: var(--font-space-grotesk), sans-serif;
+  --font-mono: var(--font-space-mono), monospace;
+  --shadow-glow-purple: 0 0 24px -4px rgba(98, 44, 142, 0.45);
+  --shadow-glow-cyan: 0 0 20px -3px rgba(0, 176, 216, 0.35);
+  --shadow-glow-green: 0 0 20px -3px rgba(183, 247, 91, 0.35);
+  --shadow-glow-red: 0 0 20px -3px rgba(148, 5, 72, 0.4);
+  --background-image-witchy-radial: radial-gradient(
+    ellipse at 50% -20%,
+    rgba(98, 44, 142, 0.25),
+    transparent 70%
+  );
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #14121b;
+  color: #f1f0f5;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar for cyber-gothic aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #14121b;
+}
+::-webkit-scrollbar-thumb {
+  background: #262330;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #622c8e;
+}
